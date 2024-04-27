@@ -1,0 +1,43 @@
+#!/usr/bin/env sh
+
+# WIDTH=${WIDTH:-200}
+# HEIGHT=${HEIGHT:-200}
+# DATEFMT=${DATEFMT:-"+Local/CT: %a %Y-%m-%d %I:%M:%S %p"}
+
+# OPTIND=1
+# while getopts ":f:W:H:" opt; do
+#     case $opt in
+#         f) DATEFMT="$OPTARG" ;;
+#         W) WIDTH="$OPTARG" ;;
+#         H) HEIGHT="$OPTARG" ;;
+#         \?)
+#             echo "Invalid option: -$OPTARG" >&2
+#             exit 1
+#             ;;
+#         :)
+#             echo "Option -$OPTARG requires an argument." >&2
+#             exit 1
+#             ;;
+#     esac
+# done
+
+# case "$BLOCK_BUTTON" in 1|2|3)
+
+# 	posX=$(($BLOCK_X - $WIDTH / 2))
+# 	posY=$(($BLOCK_Y - $HEIGHT))
+
+# 	i3-msg -q "exec yad
+#                 --calendar --width=$WIDTH --height=$HEIGHT --undecorated --fixed \
+#                 --close-on-unfocus --no-buttons --posx=$posX --posy=$posY \
+#                 > /dev/null
+#                 "
+# esac
+
+export TZ='America/Chicago'
+
+if [[ $BLOCK_BUTTON == 1 ]]; then
+    # Left click
+    yad --calendar --undecorated --fixed --close-on-unfocus --no-buttons --posx=-150 --posy=-20 > /dev/null
+
+fi
+date '+Local/CT: %a %Y-%m-%d %I:%M:%S %p'
