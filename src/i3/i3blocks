@@ -1,0 +1,63 @@
+# i3blocks config file
+# see "man i3blocks" for documentation.
+
+# Global properties
+[global]
+interval=5
+markup=pango
+
+
+[load]
+command=cat /proc/loadavg | cut -d' ' -f1-3
+label=Load:
+interval=10
+color=#FF4500
+
+# Memory
+[memory]
+command=free -h | awk '/^Mem:/ {print $3 "/" $2}'
+label=Mem:
+interval=10
+color=#32CD32
+
+# Disk Usage
+[disk]
+command=df -h | grep '/dev/sda1' | awk '{print $3 "/" $2}'
+label=Disk:
+interval=300
+color=#4682B4
+
+# Volume Control
+[volume]
+command=i3blocks-volume
+label=♪:
+instance=Master
+signal=10
+color=#FFD700
+
+[ethernet]
+command=ifconfig eth0 | grep 'inet ' | awk '{print "E: "$2}'
+label=Eth:
+interval=10
+color=#00CED1
+
+[wireless]
+command=ifconfig wlan0 | grep 'inet ' | awk '{print "W: "$2}'
+label=Wlan:
+interval=10
+color=#42EEEE
+
+
+# Time Zone: Texas
+[tztime_tx]
+command=./time_date
+interval=1
+color=#42EEEE
+
+
+# Time Zone: Los Angeles
+[tztime_la]
+command=./time_all
+interval=60
+color=#42EEEE
+# Custom script on click
