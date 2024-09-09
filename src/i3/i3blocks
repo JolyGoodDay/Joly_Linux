@@ -50,14 +50,18 @@ color=#42EEEE
 
 # Time Zone: Texas
 [tztime_tx]
-command=./time_date
+command=bash ~/.config/i3/time_date
 interval=1
 color=#42EEEE
 
 
 # Time Zone: Los Angeles
 [tztime_la]
-command=./time_all
+command=bash ~/.config/i3//time_all
 interval=60
 color=#42EEEE
-# Custom script on click
+
+
+#[pomodoro]
+#command=python ~/code/i3-pomodoro/pomodoro.py
+#interval=1
