@@ -57,11 +57,14 @@ color=#42EEEE
 
 # Time Zone: Los Angeles
 [tztime_la]
-command=bash ~/.config/i3//time_all
+command=bash ~/.config/i3/time_all
 interval=60
 color=#42EEEE
 
-
+[scarlett]
+command=~/.config/i3/scarlett
+interval=1
+color=#FF1493
 #[pomodoro]
 #command=python ~/code/i3-pomodoro/pomodoro.py
 #interval=1

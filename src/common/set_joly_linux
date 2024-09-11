@@ -1,0 +1,3 @@
+#!/bin/bash
+parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")/../.." ; pwd -P )
+sudo sed -i '/^joly_linux=/d' /etc/environment && echo "joly_linux='${parent_path}'" | sudo tee -a /etc/environment
