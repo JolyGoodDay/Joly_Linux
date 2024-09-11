@@ -6,6 +6,10 @@
 interval=5
 markup=pango
 
+[scarlett]
+command=~/.config/i3/scarlett
+interval=1
+color=#FF1493
 
 [load]
 command=cat /proc/loadavg | cut -d' ' -f1-3
@@ -61,10 +65,6 @@ command=bash ~/.config/i3/time_all
 interval=60
 color=#42EEEE
 
-[scarlett]
-command=~/.config/i3/scarlett
-interval=1
-color=#FF1493
 #[pomodoro]
 #command=python ~/code/i3-pomodoro/pomodoro.py
 #interval=1
