@@ -5,3 +5,4 @@ if ! grep -q "^joly_linux=" /etc/environment; then
     echo "joly_linux='${parent_path}'" | sudo tee -a /etc/environment
 fi
 cd $parent_path
+source /etc/environment
