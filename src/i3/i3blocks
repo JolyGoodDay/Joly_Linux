@@ -24,12 +24,11 @@ label=Mem:
 interval=10
 color=#32CD32
 
-# Disk Usage
 [disk]
-command=df -h | grep '/dev/sda1' | awk '{print $3 "/" $2}'
-label=Disk:
-interval=300
-color=#4682B4
+command=bash ~/.config/i3/disk_status
+interval=10
+color=#C9E3DB
+
 
 # Volume Control
 [volume]

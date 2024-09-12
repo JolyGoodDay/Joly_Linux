@@ -1,0 +1,39 @@
+#!/bin/bash
+source /etc/environment
+# Set background image
+export XSECURELOCK_BACKGROUND_IMAGE="$joly_linux/media/test.png"
+
+# Enable the "dim" effect over the background image
+export XSECURELOCK_BLANK_TIMEOUT=5
+export XSECURELOCK_BLANK_DPMS_STATE=off
+
+# Allow unlocking via the escape key or the backspace key
+export XSECURELOCK_AUTH_BACKGROUND_COLOR=#FF1493
+
+# Display a clock with a 24-hour format on the lock screen
+export XSECURELOCK_SHOW_CLOCK=1
+export XSECURELOCK_CLOCK_FORMAT="%H:%M:%S"
+
+# Set the password prompt text and appearance
+export XSECURELOCK_PASSWORD_PROMPT=time_hex
+export XSECURELOCK_AUTH_TIMEOUT=60
+export XSECURELOCK_FONT="DejaVu Sans Mono:size=24"
+
+# Automatically start the screensaver after a set timeout
+export XSECURELOCK_IDLE_TIMEOUT=1
+
+# Set the screensaver color scheme (foreground and background)
+export XSECURELOCK_AUTH_FOREGROUND_COLOR=#FFFFFF
+export XSECURELOCK_AUTH_BACKGROUND_COLOR=#000000
+export XSECURELOCK_PASSWORD_PROMPT=kaomoji
+
+if command -v xsecurelock &> /dev/null; then
+  xsecurelock
+else
+  i3lock
+fi
+
+if [[ "$1" = "post" ]] ; then
+  pkill -x -USR2 xsecurelock
+fi
+exit 0

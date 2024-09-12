@@ -8,8 +8,7 @@ exec_always bash ~/.config/i3/setup.sh
 font pango:monospace 10
 
 #Lock
-bindsym $mod+Escape exec i3lock --nofork -c 000000 -f
-
+bindsym $mod+Escape exec bash ~/.config/i3/lock_screen
 
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
@@ -17,7 +16,7 @@ exec --no-startup-id dex-autostart --autostart --environment i3
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id xss-lock --transfer-sleep-lock -- bash ~/.config/i3/lock_screen
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -167,12 +166,5 @@ bindsym $mod+r mode "resize"
 bar {
         status_command i3blocks -c ~/.config/i3/i3blocks
         font pango:Sparkles 11
-        # font pango:Sparkles 12
         separator_symbol ":|:"
 }
-
-#bar { status_command i3status height 15 position bottom tray_padding 0 font pango:Sparkles 8 separator_symbol "|" workspace_buttons yes strip_workspace_numbers yes
-#
-#colors { background #000000 separator #004E69 statusline #ffffff # border background text focused_workspace #000000 #000000 #00BFFF inactive_workspace #000000 #000000 #004E69 urgent_workspace $urgent-bg-color $urgent-bg-color $text-color binding_mode #2f343a #900000 #ffffff
-#
-#}
