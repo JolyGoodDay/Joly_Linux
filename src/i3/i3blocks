@@ -12,20 +12,19 @@ interval=1
 color=#FF1493
 
 [load]
-command=cat /proc/loadavg | cut -d' ' -f1-3
-label=Load:
+command=bash ~/.config/i3/load.sh
 interval=10
 color=#FF4500
 
 # Memory
 [memory]
 command=free -h | awk '/^Mem:/ {print $3 "/" $2}'
-label=Mem:
+label=𓃵
 interval=10
 color=#32CD32
 
 [disk]
-command=bash ~/.config/i3/disk_status
+command=bash ~/.config/i3/disk_status.sh
 interval=10
 color=#C9E3DB
 
@@ -50,18 +49,10 @@ label=Wlan:
 interval=10
 color=#42EEEE
 
-
-# Time Zone: Texas
-[tztime_tx]
-command=bash ~/.config/i3/time_date
-interval=1
-color=#42EEEE
-
-
 # Time Zone: Los Angeles
-[tztime_la]
+[tztime]
 command=bash ~/.config/i3/time_all
-interval=60
+interval=1
 color=#42EEEE
 
 #[pomodoro]
