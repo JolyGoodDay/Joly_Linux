@@ -7,10 +7,15 @@ interval=5
 markup=pango
 
 [scarlett]
-command=~/.config/i3/scarlett
+command=~/.config/i3/scarlett.sh
 interval=1
 color=#FF1493
 
+#weather
+[weather]
+command=bash ~/.config/i3/weather.sh
+interval=600
+color=#17CEFA
 [load]
 command=bash ~/.config/i3/load.sh
 interval=10
