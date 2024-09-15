@@ -34,8 +34,7 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 # bindsym $mod+a+Right exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 # bindsym $mod+a+Left exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
-bindsym $mod+a exec i3-sensible-terminal -- "alsamixer"
-#bindsym $mod+a exec gnome-terminal -- "alsamixer"
+bindsym $mod+a exec alacritty -e sh -c "alsamixer"
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -46,7 +45,7 @@ bindsym $mod+f exec nautilus
 
 bindsym $mod+Shift+p exec bash ~/.config/i3/screenshot/run.sh
 # start a terminal
-bindsym $mod+t exec i3-sensible-terminal
+bindsym $mod+t exec alacritty
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -100,7 +99,7 @@ bindsym $mod+space focus mode_toggle
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws0 "Terminal"
+set $ws0 "0:~Terminal"
 set $ws1 "1"
 set $ws2 "2"
 set $ws3 "3"
@@ -110,7 +109,7 @@ set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
-set $ws10 "0"
+set $ws10 "10"
 
 # switch to workspace
 bindsym $mod+grave workspace number $ws0
@@ -144,6 +143,7 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+for_window [title="time/date interactive"] floating enable, move position mouse, move right 0 px, move down 0 px
 
 # resize window (you can also use the mouse for that)
 mode "resize" {

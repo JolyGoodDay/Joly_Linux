@@ -11,11 +11,7 @@ command=~/.config/i3/scarlett.sh
 interval=1
 color=#FF1493
 
-#weather
-[weather]
-command=bash ~/.config/i3/weather.sh
-interval=600
-color=#17CEFA
+
 [load]
 command=bash ~/.config/i3/load.sh
 interval=10
@@ -53,13 +49,20 @@ command=ifconfig wlan0 | grep 'inet ' | awk '{print "W: "$2}'
 label=Wlan:
 interval=10
 color=#42EEEE
-
-# Time Zone: Los Angeles
-[tztime]
-command=bash ~/.config/i3/time_all
+#weather
+[weather]
+command=bash ~/.config/i3/weather.sh
+interval=600
+color=#17CEFA
+[date]
+command=bash ~/.config/i3/date.sh
 interval=1
 color=#42EEEE
-
+# Time Zone: Los Angeles
+[time]
+command=bash ~/.config/i3/time.sh
+interval=1
+color=#42EEEE
 #[pomodoro]
 #command=python ~/code/i3-pomodoro/pomodoro.py
 #interval=1
