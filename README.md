@@ -20,3 +20,6 @@ gthumb
 numlockx
 
 sudo yum install gtk3-devel gobject-introspection-devel pygobject3-devel i3 i3status
+binbash
+source /usr/share/fzf/shell/key-bindings.bash"  # Adds fzf ro bash
+alias ip='ip --color=auto'"  # Adds color to the ip addr command
