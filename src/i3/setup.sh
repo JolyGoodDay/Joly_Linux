@@ -62,11 +62,12 @@ function set_font_pango_sparkles() {
 
 
 if [ -f "$config_file" ]; then
+    source /etc/os-release
     if [[ "$os_name" == "Ubuntu" ]]; then
         set_font_pango_monospace 14
         set_font_pango_sparkles 16
 
-    elif [[ "$os_name" == "CentOS" ]]; then
+    elif [[ "$ID" == "centos" ]]; then
         # If OS is CentOS, change font size to 12
         xrandr --screen 0 --output DP-6.1.8 --auto --right-of DP-6.8
         set_font_pango_monospace 10
@@ -78,3 +79,4 @@ if [ -f "$config_file" ]; then
 else
     echo "$config_file file not found"
 fi
+
