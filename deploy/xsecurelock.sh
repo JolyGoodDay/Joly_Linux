@@ -1,4 +1,7 @@
 # Install required packages
+source "$(dirname "${BASH_SOURCE[0]}")/../src/common/set_joly_linux"
+set -e 
+
 if [ -f /etc/os-release ]; then
     source /etc/os-release
     if [[ $ID == "ubuntu" ]]; then
@@ -30,7 +33,6 @@ if [ -f /etc/os-release ]; then
         sudo dnf update
         sudo dnf install -y \
             httpd-tools \
-            autotools-devel \
             autoconf \
             binutils \
             gcc \
@@ -43,7 +45,6 @@ if [ -f /etc/os-release ]; then
             libXft-devel \
             libXmu-devel \
             libXrandr-devel \
-            libXss-devel \
             make \
             mplayer \
             mpv \
@@ -60,8 +61,6 @@ else
     exit 1
 fi
 
-source /etc/environment
-source $joly_linux/src/common/set_joly_linux
 mkdir -p tmp
 cd tmp
 
