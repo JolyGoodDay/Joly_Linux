@@ -20,3 +20,10 @@ sudo apt install autotools-dev autoconf-archive gettext intltool libadwaita-1-de
 #Screen shots
 sudo yum install gthumb
 # Edit picture properties and set as default app
+
+# Fonts
+mkdir -p ~/.fonts
+wget https://cdn.jsdelivr.net/gh/notofonts/notofonts.github.io/fonts/NotoSansEgyptianHieroglyphs/full/ttf/NotoSansEgyptianHieroglyphs-Regular.ttf -O ~/.fonts/NotoSansEgyptianHieroglyphs-Regular.ttf
+wget https://cdn.jsdelivr.net/gh/notofonts/notofonts.github.io/fonts/NotoSansEgyptianHieroglyphs/full/ttf/NotoSansEgyptianHieroglyphs-Regular.ttf -O ~/.fonts/NotoSansEgyptianHieroglyphs-Regular.ttf
+mv NotoSansEgyptianHieroglyphs-Regular.ttf ~/.fonts/
+fc-cache -f -v
