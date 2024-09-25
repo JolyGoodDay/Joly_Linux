@@ -5,5 +5,5 @@ while true; do
     pkill xsecurelock
 
     # Wait for 30 seconds
-    sleep 15
+    sleep 5
 done
