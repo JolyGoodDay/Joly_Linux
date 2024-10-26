@@ -12,7 +12,7 @@ pycairo==1.27.0
 PyGObject==3.48.2
 ruff==0.6.4
 six==1.16.0
-Werkzeug==3.0.4
+Werkzeug==3.0.6
 xdotool==0.4.0
 xlib==0.21
 yad==0.9.14
