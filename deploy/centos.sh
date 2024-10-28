@@ -39,6 +39,7 @@ function install_packages(){
         "cmake"
         "freetype-devel"
         "fontconfig-devel"
+        "xsecurelock"
 
     )
     #    "alacritty         # GPU-accelerated terminal emulator (may need to build from source)"
