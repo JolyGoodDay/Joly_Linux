@@ -51,7 +51,8 @@ if [ -f /etc/os-release ]; then
             pamtester \
             pkg-config \
             libXtst-devel \
-            xscreensaver
+            xscreensaver \
+            libXScrnSaver-devel
     else
         echo "Unsupported distribution or version."
         exit 1
@@ -60,16 +61,3 @@ else
     echo "Unable to determine the operating system."
     exit 1
 fi
-
-mkdir -p tmp
-cd tmp
-
-if [ ! -d "xsecurelock" ]; then
-    git clone https://github.com/google/xsecurelock.git
-fi
-cd xsecurelock
-ls
-sh autogen.sh
-bash configure --with-pam-service-name=SERVICE-NAME
-make
-sudo make install
