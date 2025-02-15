@@ -1,7 +1,8 @@
 #!/bin/bash
 source /etc/environment
 # Set background image
-export XSECURELOCK_BACKGROUND_IMAGE="$joly_linux/media/v1.jpg"
+export XSECURELOCK_BACKGROUND_IMAGE="/code/Joly_Linux/media/test.jpg"
+export XSECURELOCK_SAVER="/code/Joly_Linux/media/test.jpg"
 
 # Enable the "dim" effect over the background image
 export XSECURELOCK_BLANK_TIMEOUT=5
@@ -25,9 +26,8 @@ export XSECURELOCK_IDLE_TIMEOUT=1
 # Set the screensaver color scheme (foreground and background)
 # export XSECURELOCK_AUTH_FOREGROUND_COLOR=#FFFFFF
 # export XSECURELOCK_AUTH_BACKGROUND_COLOR=#000000
-export XSECURELOCK_PASSWORD_PROMPT=kaomoji
+# export XSECURELOCK_PASSWORD_PROMPT=kaomoji
 export XSECURELOCK_AUTH_SOUNDS=1
-export XSECURELOCK_SAVER=$joly_linux/media/v1.jpg
 
 if command -v xsecurelock &> /dev/null; then
   xsecurelock
