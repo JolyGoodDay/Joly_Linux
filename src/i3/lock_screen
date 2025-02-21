@@ -2,7 +2,7 @@
 source /etc/environment
 # Set background image
 export XSECURELOCK_BACKGROUND_IMAGE="/code/Joly_Linux/media/test.jpg"
-export XSECURELOCK_SAVER="/code/Joly_Linux/media/test.jpg"
+export XSECURELOCK_SAVER="saver_mpv"
 
 # Enable the "dim" effect over the background image
 export XSECURELOCK_BLANK_TIMEOUT=5

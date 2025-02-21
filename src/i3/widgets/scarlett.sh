@@ -8,6 +8,12 @@ if [[ $BLOCK_BUTTON == 1 ]]; then
         ./alsa-scarlett-gui &
     fi
 fi
+if [[ $BLOCK_BUTTON == 2 ]]; then
+    if [ -d "$FILE" ]; then
+        oneko -bg black -speed 25 -position -50 & sleep 300; kill $!
+    fi
+fi
+
 cats=(
 "≽^•⩊•^≼"
 "~^•ﻌ•^~"

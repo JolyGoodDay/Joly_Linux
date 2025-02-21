@@ -20,6 +20,7 @@ packages=(
     "xournalpp         # PDF viewer"
     "gthumb            # Image viewer"
     "alacritty         # Terminal emulator"
+    "oneko             # Cat that chases the mouse"
 )
 
 # Install each package in the list

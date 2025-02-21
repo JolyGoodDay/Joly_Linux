@@ -40,6 +40,7 @@ function install_packages(){
         "freetype-devel"
         "fontconfig-devel"
         "xsecurelock"
+        "python3.11-tkinter"
 
     )
     #    "alacritty         # GPU-accelerated terminal emulator (may need to build from source)"

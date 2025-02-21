@@ -22,6 +22,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- bash ~/.config/i3/lock_sc
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
 
+
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
@@ -43,7 +44,17 @@ floating_modifier $mod
 bindsym $mod+f exec nautilus
 #bindsym $mod+f exec thunar #nautilus
 
-bindsym $mod+Shift+p exec bash ~/.config/i3/screenshot/run.sh
+
+exec --no-startup-id ~/./Applications/Flameshot/Flameshot-*.AppImage
+
+bindsym $mod+p exec ~/./Applications/Flameshot/Flameshot-*.AppImage gui
+bindsym $mod+Shift+p exec ~/./Applications/Flameshot/Flameshot-*.AppImage full
+
+bindsym Print exec ~/./Applications/Flameshot/Flameshot-*.AppImage gui
+bindsym $mod+Print exec ~/./Applications/Flameshot/Flameshot-*.AppImage full
+bindsym $mod+Shift+Print exec ~/./Applications/Flameshot/Flameshot-*.AppImage config
+
+
 # start a terminal
 bindsym $mod+t exec alacritty
 
@@ -111,6 +122,17 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
+set $ws91 "91"
+set $ws92 "92"
+set $ws93 "93"
+set $ws94 "94"
+set $ws95 "95"
+set $ws96 "96"
+set $ws97 "97"
+set $ws98 "98"
+set $ws99 "99:Â¡"
+set $ws100 "100:🌐"
+
 # switch to workspace
 bindsym $mod+grave workspace number $ws0
 bindsym $mod+1 workspace number $ws1
@@ -123,6 +145,17 @@ bindsym $mod+7 workspace number $ws7
 bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws10
+# https://github.com/i3/i3/issues/2558
+bindsym $mod+mod2+KP_1 workspace number $ws91
+bindsym $mod+mod2+KP_2 workspace number $ws92
+bindsym $mod+mod2+KP_3 workspace number $ws93
+bindsym $mod+mod2+KP_4 workspace number $ws94
+bindsym $mod+mod2+KP_5 workspace number $ws95
+bindsym $mod+mod2+KP_6 workspace number $ws96
+bindsym $mod+mod2+KP_7 workspace number $ws97
+bindsym $mod+mod2+KP_8 workspace number $ws98
+bindsym $mod+mod2+KP_9 workspace number $ws99
+bindsym $mod+mod2+KP_0 workspace number $ws100
 
 # move focused container to workspace
 bindsym $mod+Shift+grave move container to workspace number $ws0
@@ -137,13 +170,33 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
+# https://github.com/i3/i3/issues/2558
+bindsym $mod+Shift+mod2+KP_End move container to workspace number $ws91
+bindsym $mod+Shift+mod2+KP_Down move container to workspace number $ws92
+bindsym $mod+Shift+mod2+KP_Next move container to workspace number $ws93
+bindsym $mod+Shift+mod2+KP_Left move container to workspace number $ws94
+bindsym $mod+Shift+mod2+KP_Begin move container to workspace number $ws95
+bindsym $mod+Shift+mod2+KP_Right move container to workspace number $ws96
+bindsym $mod+Shift+mod2+KP_Home move container to workspace number $ws97
+bindsym $mod+Shift+mod2+KP_Up move container to workspace number $ws98
+bindsym $mod+Shift+mod2+KP_Prior move container to workspace number $ws99
+bindsym $mod+Shift+mod2+KP_Insert move container to workspace number $ws100
+
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
-for_window [title="time/date interactive"] floating enable, move position mouse, move right 0 px, move down 0 px
+
+# Match windows by class and apply floating behavior
+for_window [class="Widget"] floating enable, move position mouse, move right 0 px, move down 0 px, move up 20px
+for_window [class="Widget_mid"] floating enable, resize set 1300 900, move position mouse
+for_window [class="Widget_fs"] floating enable, fullscreen enable, move position mouse, move right 0 px, move down 0 px
+
+# Start the focus-loss monitor script
+exec --no-startup-id ~/focus_loss_monitor.sh
+
 
 # resize window (you can also use the mouse for that)
 mode "resize" {

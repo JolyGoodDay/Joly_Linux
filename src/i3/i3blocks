@@ -6,26 +6,31 @@
 interval=5
 markup=pango
 
+
 [scarlett]
-command=~/.config/i3/scarlett.sh
+command=~/.config/i3/widgets/scarlett.sh
 interval=1
 color=#FF1493
 
+[mycountdown]
+command=~/.config/i3/widgets/countdown.sh
+interval=1
+color=#426942
+
 
 [load]
-command=bash ~/.config/i3/load.sh
+command=bash ~/.config/i3/widgets/load.sh
 interval=10
 color=#FF4500
 
 # Memory
 [memory]
-command=free -h | awk '/^Mem:/ {print $3 "/" $2}'
-label=𓃵
+command=bash ~/.config/i3/widgets/ram.sh
 interval=10
 color=#32CD32
 
 [disk]
-command=bash ~/.config/i3/disk_status.sh
+command=bash ~/.config/i3/widgets/disk_status.sh
 interval=10
 color=#C9E3DB
 
@@ -39,28 +44,23 @@ signal=10
 color=#FFD700
 
 [ethernet]
-command=ifconfig eth0 | grep 'inet ' | awk '{print "E: "$2}'
+command=bash ~/.config/i3/widgets/network.sh
 label=Eth:
 interval=10
 color=#00CED1
 
-[wireless]
-command=ifconfig wlan0 | grep 'inet ' | awk '{print "W: "$2}'
-label=Wlan:
-interval=10
-color=#42EEEE
 #weather
 [weather]
-command=bash ~/.config/i3/weather.sh
+command=bash ~/.config/i3/widgets/weather.sh
 interval=600
 color=#17CEFA
 [date]
-command=bash ~/.config/i3/date.sh
+command=bash ~/.config/i3/widgets/date.sh
 interval=1
 color=#42EEEE
 # Time Zone: Los Angeles
 [time]
-command=bash ~/.config/i3/time.sh
+command=bash ~/.config/i3/widgets/time.sh
 interval=1
 color=#42EEEE
 #[pomodoro]
