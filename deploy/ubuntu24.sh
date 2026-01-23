@@ -21,6 +21,9 @@ packages=(
     "gthumb            # Image viewer"
     "alacritty         # Terminal emulator"
     "oneko             # Cat that chases the mouse"
+    "curl              # Get url stuff"
+    "jq"
+    "librecad"
 )
 
 # Install each package in the list
