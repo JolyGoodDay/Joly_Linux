@@ -63,6 +63,11 @@ color=#42EEEE
 command=bash ~/.config/i3/widgets/time.sh
 interval=1
 color=#42EEEE
+
+[battery]
+command=bash ~/.config/i3/widgets/bat.sh
+interval=10
+
 #[pomodoro]
 #command=python ~/code/i3-pomodoro/pomodoro.py
 #interval=1

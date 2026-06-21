@@ -1,4 +1,5 @@
 sudo add-apt-repository ppa:deadsnakes/ppa
+sudo add-apt-repository ppa:phoerious/keepassxc
 sudo apt update
 
 # Define an array of packages with comments
@@ -6,6 +7,7 @@ packages=(
     "numlockx          # Num Lock utility"
     "i3                # Window manager"
     "i3status          # Status bar for i3"
+    "i3blocks"
     "libreoffice       # Office suite"
     "python3-gi        # Python bindings for GObject"
     "python3-gi-cairo  # Cairo bindings for Python"
@@ -24,6 +26,9 @@ packages=(
     "curl              # Get url stuff"
     "jq"
     "librecad"
+    "keepassxc"
+    "net-tools"
+    "oneko"
 )
 
 # Install each package in the list

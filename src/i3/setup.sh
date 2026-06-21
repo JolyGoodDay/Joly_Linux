@@ -43,8 +43,11 @@ if ! grep -q 'background: "0x1d1f21"' ~/.config/alacritty/alacritty.yml; then
     echo '    background: "0x1d1f21"' >> ~/.config/alacritty/alacritty.yml
     echo '    foreground: "0xc5c8c6"' >> ~/.config/alacritty/alacritty.yml
 fi
+
 # Numlock
-./usr/bin/numlockx on
+if [ ! -f /usr/bin/numlockx ]; then
+    ./usr/bin/numlockx on
+fi
 
 # Fix screens
 # exec_always xrandr --output DP-1 --scale 1x1
@@ -63,10 +66,12 @@ function set_font_pango_sparkles() {
 
 if [ -f "$config_file" ]; then
     source /etc/os-release
-    if [[ "$os_name" == "Ubuntu" ]]; then
+    if [[ "$(hostname)"  == "joly-Laptop-12-13th-Gen-Intel-Core" ]]; then
         set_font_pango_monospace 14
         set_font_pango_sparkles 16
-
+    elif [[ "$os_name" == "Ubuntu" ]]; then
+        set_font_pango_monospace 14
+        set_font_pango_sparkles 16
     elif [[ "$ID" == "centos" ]]; then
         # If OS is CentOS, change font size to 12
         xrandr --screen 0 --output DP-6.1.8 --auto --right-of DP-6.8
