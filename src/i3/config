@@ -45,14 +45,14 @@ bindsym $mod+f exec nautilus
 #bindsym $mod+f exec thunar #nautilus
 
 
-exec --no-startup-id ~/./Applications/Flameshot/Flameshot-*.AppImage
+exec_always --no-startup-id bash -c "pkill -fi flameshot; sleep 0.5; ~/Applications/Flameshot/Flameshot.AppImage &"
 
-bindsym $mod+p exec ~/./Applications/Flameshot/Flameshot-*.AppImage gui
-bindsym $mod+Shift+p exec ~/./Applications/Flameshot/Flameshot-*.AppImage full
+bindsym $mod+p exec ~/Applications/Flameshot/Flameshot.AppImage gui
+bindsym $mod+Shift+p exec ~/Applications/Flameshot/Flameshot.AppImage full
 
-bindsym Print exec ~/./Applications/Flameshot/Flameshot-*.AppImage gui
-bindsym $mod+Print exec ~/./Applications/Flameshot/Flameshot-*.AppImage full
-bindsym $mod+Shift+Print exec ~/./Applications/Flameshot/Flameshot-*.AppImage config
+bindsym Print exec ~/Applications/Flameshot/Flameshot.AppImage gui
+bindsym $mod+Print exec ~/Applications/Flameshot/Flameshot.AppImage full
+bindsym $mod+Shift+Print exec ~/Applications/Flameshot/Flameshot.AppImage config
 
 
 # start a terminal
@@ -220,4 +220,5 @@ bar {
         status_command i3blocks -c ~/.config/i3/i3blocks
         font pango:Sparkles 11
         separator_symbol ":|:"
+        tray_output primary
 }

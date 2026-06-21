@@ -2,6 +2,12 @@
   hosts: all
   gather_facts: true
 
+  vars_prompt:
+    - name: font_size_choice
+      prompt: "Font size? [S]mall / [L]arge"
+      default: "s"
+      private: false
+
   pre_tasks:
     - name: Confirm user and install directory
       ansible.builtin.pause:

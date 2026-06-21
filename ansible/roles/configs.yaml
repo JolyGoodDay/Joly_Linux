@@ -41,6 +41,88 @@
     state: directory
     mode: "0755"
 
+- name: Create GTK3 config directory
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.config/gtk-3.0"
+    state: directory
+    mode: "0755"
+
+- name: Set GTK dark theme
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_user_dir }}/.config/gtk-3.0/settings.ini"
+    create: true
+    regexp: "^gtk-theme-name"
+    line: "gtk-theme-name = Adwaita-dark"
+    insertafter: "\\[Settings\\]"
+
+- name: Ensure GTK settings section header exists
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_user_dir }}/.config/gtk-3.0/settings.ini"
+    line: "[Settings]"
+    insertbefore: "^gtk-theme-name"
+
+- name: Create qt5ct config directory
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.config/qt5ct"
+    state: directory
+    mode: "0755"
+
+- name: Ensure qt5ct Appearance section header exists
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_user_dir }}/.config/qt5ct/qt5ct.conf"
+    create: true
+    line: "[Appearance]"
+    insertbefore: BOF
+
+- name: Set qt5ct style
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_user_dir }}/.config/qt5ct/qt5ct.conf"
+    regexp: "^style="
+    line: "style=gtk2"
+
+- name: Set qt5ct palette
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_user_dir }}/.config/qt5ct/qt5ct.conf"
+    regexp: "^palette="
+    line: "palette=qt5ct"
+
+- name: Configure Xresources URxvt theme
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/.Xresources"
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED - URxvt theme"
+    block: |
+      URxvt.background: black
+      URxvt.foreground: white
+
+- name: Load Xresources
+  ansible.builtin.command: xrdb "{{ ansible_user_dir }}/.Xresources"
+  ignore_errors: true
+
+- name: Set i3 font sizes by input
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_user_dir }}/.config/i3/config"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  loop:
+    - regexp: "^.*font pango:monospace .*"
+      line: "font pango:monospace {{ '14' if font_size_choice | lower == 'l' else '10' }}"
+    - regexp: "^.*font pango:Sparkles .*"
+      line: "font pango:Sparkles {{ '16' if font_size_choice | lower == 'l' else '11' }}"
+  when: ansible_facts["os_family"] != "RedHat"
+
+- name: Set i3 font sizes (CentOS)
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_user_dir }}/.config/i3/config"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  loop:
+    - regexp: "^.*font pango:monospace .*"
+      line: "font pango:monospace 10"
+    - regexp: "^.*font pango:Sparkles .*"
+      line: "font pango:Sparkles 11"
+  when: ansible_facts["os_family"] == "RedHat"
+
 - name: Reload i3
   ansible.builtin.command: i3-msg reload
   ignore_errors: true
