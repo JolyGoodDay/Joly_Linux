@@ -1,0 +1,50 @@
+- name: Set joly_linux path in /etc/environment
+  ansible.builtin.lineinfile:
+    path: /etc/environment
+    regexp: "^joly_linux="
+    line: "joly_linux='{{ joly_linux_dir }}'"
+  become: true
+
+- name: Remove old config directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "{{ ansible_user_dir }}/.config/i3"
+    - "{{ ansible_user_dir }}/.i3"
+    - "{{ ansible_user_dir }}/.config/i3status"
+    - "{{ ansible_user_dir }}/.config/i3blocks"
+    - "{{ ansible_user_dir }}/.config/alacritty"
+    - "{{ ansible_user_dir }}/.config/khal"
+
+- name: Copy i3 config
+  ansible.builtin.copy:
+    src: "{{ joly_linux_dir }}/src/i3/"
+    dest: "{{ ansible_user_dir }}/.config/i3/"
+    mode: preserve
+
+- name: Copy alacritty config
+  ansible.builtin.copy:
+    src: "{{ joly_linux_dir }}/src/alacritty/"
+    dest: "{{ ansible_user_dir }}/.config/alacritty/"
+    mode: preserve
+
+- name: Copy khal config
+  ansible.builtin.copy:
+    src: "{{ joly_linux_dir }}/src/khal/"
+    dest: "{{ ansible_user_dir }}/.config/khal/"
+    mode: preserve
+
+- name: Create khal calendar directory
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.local/share/khal/calendars/private"
+    state: directory
+    mode: "0755"
+
+- name: Reload i3
+  ansible.builtin.command: i3-msg reload
+  ignore_errors: true
+
+- name: Restart i3
+  ansible.builtin.command: i3-msg restart
+  ignore_errors: true

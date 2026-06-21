@@ -1,0 +1,23 @@
+- name: Install alsa-scarlett-gui dependencies
+  ansible.builtin.apt:
+    name:
+      - git
+      - make
+      - gcc
+      - libgtk-4-dev
+      - libasound2-dev
+      - libssl-dev
+    state: present
+    update_cache: true
+  become: true
+
+- name: Clone alsa-scarlett-gui
+  ansible.builtin.git:
+    repo: https://github.com/geoffreybennett/alsa-scarlett-gui.git
+    dest: /tmp/alsa-scarlett-gui
+    version: master
+
+- name: Build alsa-scarlett-gui
+  ansible.builtin.command: make -j{{ ansible_processor_nproc }}
+  args:
+    chdir: /tmp/alsa-scarlett-gui/src

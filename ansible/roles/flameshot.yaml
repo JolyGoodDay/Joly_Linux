@@ -1,0 +1,57 @@
+- name: Create Flameshot directory
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/Applications/Flameshot"
+    state: directory
+    mode: "0755"
+
+- name: Remove old Flameshot AppImages
+  ansible.builtin.find:
+    paths: "{{ ansible_user_dir }}/Applications/Flameshot"
+    patterns: "*.AppImage"
+  register: old_appimages
+
+- name: Delete old Flameshot AppImages
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: absent
+  loop: "{{ old_appimages.files }}"
+
+- name: Get Flameshot AppImage zip URL
+  ansible.builtin.shell:
+    cmd: |
+      curl -s https://api.github.com/repos/flameshot-org/flameshot/releases/latest \
+      | python3 -c "
+      import sys, json
+      assets = json.load(sys.stdin)['assets']
+      url = next(a['browser_download_url'] for a in assets
+                 if 'appimage-x86_64.zip' in a['name'] and 'sha256' not in a['name'])
+      print(url)
+      "
+    executable: /bin/bash
+  register: flameshot_url
+
+- name: Download Flameshot AppImage zip
+  ansible.builtin.get_url:
+    url: "{{ flameshot_url.stdout }}"
+    dest: /tmp/flameshot-appimage.zip
+    mode: "0644"
+
+- name: Extract AppImage from zip to /tmp
+  ansible.builtin.unarchive:
+    src: /tmp/flameshot-appimage.zip
+    dest: /tmp/
+    remote_src: true
+
+- name: Find extracted AppImage in /tmp
+  ansible.builtin.find:
+    paths: /tmp
+    patterns: "*.AppImage"
+    recurse: true
+  register: appimage_files
+
+- name: Move AppImage to Applications directory
+  ansible.builtin.copy:
+    src: "{{ appimage_files.files[0].path }}"
+    dest: "{{ ansible_user_dir }}/Applications/Flameshot/{{ appimage_files.files[0].path | basename }}"
+    mode: "0755"
+    remote_src: true

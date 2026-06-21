@@ -1,0 +1,1 @@
+joly_linux_dir: "{{ playbook_dir }}/../.."

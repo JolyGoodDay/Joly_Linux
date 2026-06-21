@@ -1,0 +1,85 @@
+- name: Joly Linux workstation setup
+  hosts: all
+  gather_facts: true
+
+  pre_tasks:
+    - name: Confirm user and install directory
+      ansible.builtin.pause:
+        prompt: |
+          User:              {{ ansible_user_id }}
+          Home:              {{ ansible_user_dir }}
+          Apps directory:    {{ ansible_user_dir }}/Applications
+
+          Proceed? [Y/n]
+      register: _confirm
+
+    - name: Abort if not confirmed
+      ansible.builtin.fail:
+        msg: "Aborted by user."
+      when: _confirm.user_input | default('y', true) | lower == 'n'
+
+  tasks:
+    - ansible.builtin.include_tasks:
+        file: ../roles/_prompt.yaml
+      vars:
+        label: "Install Ubuntu 24 packages?"
+        role: ubuntu24
+        default_answer: "y"
+      when: ansible_facts["distribution"] == "Ubuntu"
+
+    - ansible.builtin.include_tasks:
+        file: ../roles/_prompt.yaml
+      vars:
+        label: "Install CentOS packages?"
+        role: centos
+        default_answer: "y"
+      when: ansible_facts["os_family"] == "RedHat"
+
+    - ansible.builtin.include_tasks:
+        file: ../roles/_prompt.yaml
+      vars:
+        label: "Install xsecurelock dependencies?"
+        role: xsecurelock
+        default_answer: "y"
+
+    - ansible.builtin.include_tasks:
+        file: ../roles/_prompt.yaml
+      vars:
+        label: "Deploy i3/alacritty/khal configs?"
+        role: configs
+        default_answer: "y"
+
+    - ansible.builtin.include_tasks:
+        file: ../roles/_prompt.yaml
+      vars:
+        label: "Install DMX/OLA packages?"
+        role: dmx
+        default_answer: "n"
+
+    - ansible.builtin.include_tasks:
+        file: ../roles/_prompt.yaml
+      vars:
+        label: "Install Flameshot AppImage?"
+        role: flameshot
+        default_answer: "y"
+
+    - ansible.builtin.include_tasks:
+        file: ../roles/_prompt.yaml
+      vars:
+        label: "Install Scarlett GUI?"
+        role: scarlett
+        default_answer: "n"
+
+    - ansible.builtin.include_tasks:
+        file: ../roles/_prompt.yaml
+      vars:
+        label: "Install Docker CE?"
+        role: docker
+        default_answer: "n"
+
+    - ansible.builtin.include_tasks:
+        file: ../roles/_prompt.yaml
+      vars:
+        label: "Disable CUPS (printing) services?"
+        role: kill_cupsd
+        default_answer: "n"

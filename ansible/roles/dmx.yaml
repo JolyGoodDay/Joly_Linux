@@ -1,0 +1,9 @@
+- name: Install DMX/OLA packages
+  ansible.builtin.apt:
+    name:
+      - libftdi1
+      - libusb-1.0-0-dev
+      - ola
+    state: present
+    update_cache: true
+  become: true

@@ -1,0 +1,11 @@
+- name: Stop, disable, and mask CUPS services
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    state: stopped
+    enabled: false
+    masked: true
+  loop:
+    - cups.service
+    - cups.socket
+    - cups.path
+  become: true

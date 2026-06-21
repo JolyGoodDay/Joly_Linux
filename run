@@ -1,12 +1,21 @@
 #!/bin/bash
-setup(){
-    #python3.11 -m venv venv
-    python3.12 -m venv venv
-    source venv/bin/activate
-    pip install --upgrade pip
-    pip install -r requirements_p3.12.txt
-}
-deploy_i3(){
-    source deploy/i3.sh
-}
-setup
+set -e
+
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+VENV="$REPO/venv"
+
+python3 -m venv "$VENV"
+source "$VENV/bin/activate"
+pip install --quiet --upgrade pip
+pip install --quiet -r "$REPO/requirements.txt"
+
+case "${1:-}" in
+    i3)
+        ansible-playbook -i "$REPO/ansible/inventory.yaml" \
+            -e "joly_linux_dir=$REPO" \
+            "$REPO/ansible/playbooks/i3.yaml"
+        ;;
+    *)
+        ansible-playbook -K -i "$REPO/ansible/inventory.yaml" "$REPO/ansible/playbooks/playbook.yaml"
+        ;;
+esac

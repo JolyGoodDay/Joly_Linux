@@ -1,0 +1,70 @@
+- name: Find conflicting deadsnakes PPA sources
+  ansible.builtin.find:
+    paths: /etc/apt/sources.list.d
+    patterns: "*deadsnakes*"
+  register: deadsnakes_sources
+  become: true
+
+- name: Remove conflicting deadsnakes PPA sources
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: absent
+  loop: "{{ deadsnakes_sources.files }}"
+  become: true
+
+- name: Add deadsnakes PPA
+  ansible.builtin.apt_repository:
+    repo: ppa:deadsnakes/ppa
+    state: present
+  become: true
+
+- name: Find conflicting KeePassXC PPA sources
+  ansible.builtin.find:
+    paths: /etc/apt/sources.list.d
+    patterns: "*keepassxc*"
+  register: keepassxc_sources
+  become: true
+
+- name: Remove conflicting KeePassXC PPA sources
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: absent
+  loop: "{{ keepassxc_sources.files }}"
+  become: true
+
+- name: Add KeePassXC PPA
+  ansible.builtin.apt_repository:
+    repo: ppa:phoerious/keepassxc
+    state: present
+  become: true
+
+- name: Install packages
+  ansible.builtin.apt:
+    name:
+      - numlockx
+      - i3
+      - i3status
+      - i3blocks
+      - libreoffice
+      - python3-gi
+      - python3-gi-cairo
+      - gir1.2-gtk-4.0
+      - libcairo2-dev
+      - libgirepository1.0-dev
+      - build-essential
+      - pkg-config
+      - meson
+      - ninja-build
+      - libglib2.0-dev
+      - xournalpp
+      - gthumb
+      - alacritty
+      - oneko
+      - curl
+      - jq
+      - librecad
+      - keepassxc
+      - net-tools
+    state: present
+    update_cache: true
+  become: true

@@ -58,7 +58,7 @@ interactive_mode() {
         case "$mode" in
             3) url="https://wttr.in/moon" ;;
             2) echo "Enter a ZIP code:"; read -p "> " zip; url="https://wttr.in/$zip";;
-            *) url="https://wttr.in/78602";; # Bastrop, Texas
+            *) url="https://wttr.in/";;
         esac
 
         fetch_weather "$url" &
@@ -85,4 +85,4 @@ elif [[ $BLOCK_BUTTON == 2 ]]; then
 fi
 
 # Default output to i3blocks
-curl -Ss 'https://wttr.in/78602?format=%C+%t+%w' | xargs echo
+curl -Ss 'https://wttr.in/?format=%C+%t+%w' | xargs echo

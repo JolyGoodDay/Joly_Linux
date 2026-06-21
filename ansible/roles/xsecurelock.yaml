@@ -1,0 +1,57 @@
+- name: Install xsecurelock dependencies (Debian/Ubuntu)
+  ansible.builtin.apt:
+    name:
+      - apache2-utils
+      - autotools-dev
+      - autoconf
+      - binutils
+      - gcc
+      - libc-dev
+      - libpam0g-dev
+      - libx11-dev
+      - libxcomposite-dev
+      - libxext-dev
+      - libxfixes-dev
+      - libxft-dev
+      - libxmu-dev
+      - libxrandr-dev
+      - libxss-dev
+      - make
+      - mplayer
+      - mpv
+      - pkg-config
+      - libxtst-dev
+      - xscreensaver
+    state: present
+    update_cache: true
+  become: true
+  when: ansible_facts["os_family"] == "Debian"
+
+- name: Install xsecurelock dependencies (CentOS 9)
+  ansible.builtin.dnf:
+    name:
+      - httpd-tools
+      - autoconf
+      - binutils
+      - gcc
+      - glibc-devel
+      - pam-devel
+      - libX11-devel
+      - libXcomposite-devel
+      - libXext-devel
+      - libXfixes-devel
+      - libXft-devel
+      - libXmu-devel
+      - libXrandr-devel
+      - make
+      - mplayer
+      - mpv
+      - pamtester
+      - pkg-config
+      - libXtst-devel
+      - xscreensaver
+      - libXScrnSaver-devel
+    state: present
+    update_cache: true
+  become: true
+  when: ansible_facts["os_family"] == "RedHat" and ansible_facts["distribution_major_version"] == "9"

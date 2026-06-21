@@ -1,0 +1,114 @@
+- name: Install packages
+  ansible.builtin.yum:
+    name:
+      - numlockx
+      - libreoffice
+      - i3
+      - i3status
+      - autoconf
+      - automake
+      - libtool
+      - intltool
+      - pygobject3-devel
+      - python3-gobject
+      - python3-cairo
+      - gtk4-devel
+      - cairo-devel
+      - gobject-introspection-devel
+      - gcc
+      - gcc-c++
+      - make
+      - pkgconfig
+      - meson
+      - ninja-build
+      - glib2-devel
+      - xournalpp
+      - gthumb
+      - gettext
+      - autoconf-archive
+      - cargo
+      - g++
+      - libxkbcommon-devel
+      - libxcb-devel
+      - cmake
+      - freetype-devel
+      - fontconfig-devel
+      - xsecurelock
+      - python3.11-tkinter
+    state: present
+    update_cache: true
+  become: true
+
+- name: Build and install i3blocks from source
+  block:
+    - name: Run i3blocks autogen
+      ansible.builtin.command: ./autogen.sh
+      args:
+        chdir: "{{ joly_linux_dir }}/i3blocks"
+
+    - name: Configure i3blocks
+      ansible.builtin.command: ./configure
+      args:
+        chdir: "{{ joly_linux_dir }}/i3blocks"
+
+    - name: Build i3blocks
+      ansible.builtin.command: make
+      args:
+        chdir: "{{ joly_linux_dir }}/i3blocks"
+
+    - name: Install i3blocks
+      ansible.builtin.command: make install
+      args:
+        chdir: "{{ joly_linux_dir }}/i3blocks"
+      become: true
+
+- name: Create fonts directory
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.fonts"
+    state: directory
+    mode: "0755"
+
+- name: Download Noto Sans Egyptian Hieroglyphs font
+  ansible.builtin.get_url:
+    url: https://cdn.jsdelivr.net/gh/notofonts/notofonts.github.io/fonts/NotoSansEgyptianHieroglyphs/full/ttf/NotoSansEgyptianHieroglyphs-Regular.ttf
+    dest: "{{ ansible_user_dir }}/.fonts/NotoSansEgyptianHieroglyphs-Regular.ttf"
+    mode: "0644"
+
+- name: Refresh font cache
+  ansible.builtin.command: fc-cache -f -v
+
+- name: Clone alacritty
+  ansible.builtin.git:
+    repo: https://github.com/alacritty/alacritty.git
+    dest: /tmp/alacritty
+    version: master
+
+- name: Build alacritty
+  ansible.builtin.command: cargo build --release
+  args:
+    chdir: /tmp/alacritty
+
+- name: Install alacritty binary
+  ansible.builtin.copy:
+    src: /tmp/alacritty/target/release/alacritty
+    dest: /usr/local/bin/alacritty
+    mode: "0755"
+    remote_src: true
+  become: true
+
+- name: Install alacritty icon
+  ansible.builtin.copy:
+    src: /tmp/alacritty/extra/logo/alacritty-term.svg
+    dest: /usr/share/pixmaps/Alacritty.svg
+    remote_src: true
+  become: true
+
+- name: Install alacritty desktop file
+  ansible.builtin.command: desktop-file-install extra/linux/Alacritty.desktop
+  args:
+    chdir: /tmp/alacritty
+  become: true
+
+- name: Update desktop database
+  ansible.builtin.command: update-desktop-database
+  become: true
