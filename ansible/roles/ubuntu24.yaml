@@ -66,6 +66,8 @@
       - keepassxc
       - net-tools
       - khal
+      - copyq
+      - xdotool
     state: present
     update_cache: true
   become: true

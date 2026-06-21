@@ -1,3 +1,25 @@
+- name: Apply CopyQ dark theme
+  community.general.ini_file:
+    path: "{{ ansible_user_dir }}/.config/copyq/copyq.conf"
+    section: Theme
+    option: "{{ item.key }}"
+    value: "{{ item.value }}"
+    mode: "0644"
+  loop:
+    - { key: bg,              value: "#1d1f21" }
+    - { key: alt_bg,          value: "#222426" }
+    - { key: fg,              value: "#c5c8c6" }
+    - { key: sel_bg,          value: "#2296ab" }
+    - { key: sel_fg,          value: "#ffffff" }
+    - { key: edit_bg,         value: "#252527" }
+    - { key: edit_fg,         value: "#c5c8c6" }
+    - { key: find_bg,         value: "#f0c674" }
+    - { key: find_fg,         value: "#1d1f21" }
+    - { key: num_fg,          value: "#666666" }
+    - { key: notification_bg, value: "#1d1f21" }
+    - { key: notification_fg, value: "#c5c8c6" }
+    - { key: style_main_window, value: "true" }
+
 - name: Install joy command
   ansible.builtin.copy:
     dest: /bin/joy

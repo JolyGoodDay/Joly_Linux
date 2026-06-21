@@ -1,0 +1,65 @@
+#!/bin/bash
+set -euo pipefail
+
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CONFIG="$REPO/src/i3/config"
+PASS=0
+FAIL=0
+
+ok()   { echo "  [OK]  $1"; ((PASS++)); }
+fail() { echo "  [FAIL] $1"; ((FAIL++)); }
+
+echo "=== i3 config tests ==="
+
+# syntax check
+if i3 -C -c "$CONFIG" 2>/dev/null; then
+    ok "config passes i3 syntax check"
+else
+    fail "config fails i3 syntax check"
+fi
+
+# required bindings
+required_bindings=(
+    '$mod+t'
+    '$mod+Shift+q'
+    '$mod+c'
+    '$mod+v'
+    '$mod+x'
+    '$mod+Escape'
+    '$mod+Shift+c'
+    '$mod+Shift+r'
+)
+for binding in "${required_bindings[@]}"; do
+    if grep -q "bindsym $binding " "$CONFIG"; then
+        ok "binding exists: $binding"
+    else
+        fail "missing binding: $binding"
+    fi
+done
+
+# no duplicate bindings
+duplicates=$(i3 -C -c "$CONFIG" 2>&1 | grep "Duplicate keybinding" || true)
+if [[ -z "$duplicates" ]]; then
+    ok "no duplicate keybindings"
+else
+    fail "duplicate keybindings: $duplicates"
+fi
+
+# clipboard bindings use --clearmodifiers
+if grep '$mod+v' "$CONFIG" | grep -q 'clearmodifiers'; then
+    ok "paste binding uses --clearmodifiers"
+else
+    fail "paste binding missing --clearmodifiers"
+fi
+
+# exec pipes wrapped in bash -c
+for line in $(grep -n 'exec.*|' "$CONFIG"); do
+    if ! echo "$line" | grep -q 'bash -c'; then
+        fail "pipe in exec not wrapped in bash -c: $line"
+    fi
+done
+ok "all piped exec commands wrapped in bash -c"
+
+echo ""
+echo "=== $PASS passed, $FAIL failed ==="
+[[ $FAIL -eq 0 ]]

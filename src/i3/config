@@ -58,6 +58,13 @@ bindsym $mod+Shift+Print exec ~/Applications/Flameshot/Flameshot.AppImage config
 # start a terminal
 bindsym $mod+t exec alacritty
 
+# clipboard
+exec_always --no-startup-id bash -c "pkill -x copyq 2>/dev/null; sleep 0.3; setsid copyq &>/dev/null &"
+bindsym --release $mod+c exec --no-startup-id copyq copy
+bindsym --release $mod+v exec --no-startup-id copyq paste
+bindsym $mod+x exec --no-startup-id copyq cut
+bindsym $mod+h exec --no-startup-id copyq toggle
+
 # kill focused window
 bindsym $mod+Shift+q kill
 
@@ -83,11 +90,9 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
-
+# bindsym $mod+h split h
 # split in vertical orientation
-bindsym $mod+v split v
-
+# bindsym $mod+v split v
 # enter fullscreen mode for the focused container
 # bindsym $mod+f fullscreen toggle
 

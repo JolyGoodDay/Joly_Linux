@@ -35,6 +35,8 @@
       - fontconfig-devel
       - xsecurelock
       - python3.11-tkinter
+      - copyq
+      - xdotool
     state: present
     update_cache: true
   become: true
