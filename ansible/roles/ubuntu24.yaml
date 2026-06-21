@@ -65,6 +65,7 @@
       - librecad
       - keepassxc
       - net-tools
+      - khal
     state: present
     update_cache: true
   become: true

@@ -3,5 +3,5 @@
     prompt: "{{ label }} [{{ 'Y/n' if default_answer == 'y' else 'y/N' }}]"
   register: _prompt
 
-- ansible.builtin.include_tasks: "roles/{{ role }}.yaml"
+- ansible.builtin.include_tasks: "../roles/{{ role }}.yaml"
   when: _prompt.user_input | default(default_answer, true) | lower == 'y'
