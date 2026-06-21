@@ -1,3 +1,12 @@
+- name: Install joy command
+  ansible.builtin.copy:
+    dest: /bin/joy
+    mode: "0755"
+    content: |
+      #!/bin/bash
+      exec "{{ joly_linux_dir }}/venv/bin/python3" "{{ joly_linux_dir }}/src/common/joy.py"
+  become: true
+
 - name: Set joly_linux path in /etc/environment
   ansible.builtin.lineinfile:
     path: /etc/environment

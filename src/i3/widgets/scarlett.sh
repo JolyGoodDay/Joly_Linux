@@ -14,20 +14,6 @@ if [[ $BLOCK_BUTTON == 2 ]]; then
     fi
 fi
 
-cats=(
-"≽^•⩊•^≼"
-"~^•ﻌ•^~"
-"(=^･ω･^=)"
-"~(=^‥^=)~"
-"(=^-ω-^=)"
-"(=^･ｪ･^=)"
-"~(=^･^=)~"
-"(=^･ｪ･^=)"
-"(=˃ᆺ˂=)"
-"(=^･^=)"
-"(^≗ω≗^)"
-"(✖﹏✖)")
-
 # Randomly pick a cat and echo it with a fixed width
 random_index=$((RANDOM % ${#cats[@]}))
 printf "%-12s\n" "${cats[$random_index]}"

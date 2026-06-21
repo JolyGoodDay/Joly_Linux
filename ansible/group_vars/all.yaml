@@ -1,1 +1,1 @@
-joly_linux_dir: "{{ playbook_dir }}/../.."
+joly_linux_dir: "{{ (playbook_dir + '/../..') | realpath }}"

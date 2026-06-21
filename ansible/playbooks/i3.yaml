@@ -9,36 +9,5 @@
       private: false
 
   tasks:
-    - name: Remove old i3 config directories
-      ansible.builtin.file:
-        path: "{{ item }}"
-        state: absent
-      loop:
-        - "{{ ansible_user_dir }}/.config/i3"
-        - "{{ ansible_user_dir }}/.i3"
-        - "{{ ansible_user_dir }}/.config/i3status"
-        - "{{ ansible_user_dir }}/.config/i3blocks"
-
-    - name: Copy i3 config
-      ansible.builtin.copy:
-        src: "{{ joly_linux_dir }}/src/i3/"
-        dest: "{{ ansible_user_dir }}/.config/i3/"
-        mode: preserve
-
-    - name: Set i3 font sizes by input
-      ansible.builtin.lineinfile:
-        path: "{{ ansible_user_dir }}/.config/i3/config"
-        regexp: "{{ item.regexp }}"
-        line: "{{ item.line }}"
-      loop:
-        - regexp: "^.*font pango:monospace .*"
-          line: "font pango:monospace {{ '14' if font_size_choice | lower == 'l' else '10' }}"
-        - regexp: "^.*font pango:Sparkles .*"
-          line: "font pango:Sparkles {{ '16' if font_size_choice | lower == 'l' else '11' }}"
-      when: ansible_facts["os_family"] != "RedHat"
-
-    - name: Reload i3
-      ansible.builtin.command: i3-msg reload
-
-    - name: Restart i3
-      ansible.builtin.command: i3-msg restart
+    - ansible.builtin.include_tasks:
+        file: ../roles/i3_setup.yaml

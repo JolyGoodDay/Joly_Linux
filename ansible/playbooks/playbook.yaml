@@ -52,7 +52,7 @@
         file: ../roles/_prompt.yaml
       vars:
         label: "Deploy i3/alacritty/khal configs?"
-        role: configs
+        role: i3_setup
         default_answer: "y"
 
     - ansible.builtin.include_tasks:

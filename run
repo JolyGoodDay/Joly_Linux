@@ -11,11 +11,13 @@ pip install --quiet -r "$REPO/requirements.txt"
 
 case "${1:-}" in
     i3)
-        ansible-playbook -i "$REPO/ansible/inventory.yaml" \
+        ansible-playbook -K -i "$REPO/ansible/inventory.yaml" \
             -e "joly_linux_dir=$REPO" \
             "$REPO/ansible/playbooks/i3.yaml"
         ;;
     *)
-        ansible-playbook -K -i "$REPO/ansible/inventory.yaml" "$REPO/ansible/playbooks/playbook.yaml"
+        ansible-playbook -K -i "$REPO/ansible/inventory.yaml" \
+            -e "joly_linux_dir=$REPO" \
+            "$REPO/ansible/playbooks/playbook.yaml"
         ;;
 esac
