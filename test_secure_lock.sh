@@ -1,9 +1,9 @@
 #!/bin/bash
 
-while true; do
-    # Kill all xsecurelock processes
-    pkill xsecurelock
+LOCK_SCRIPT="$(dirname "$(readlink -f "$0")")/src/i3/lock.sh"
 
-    # Wait for 30 seconds
-    sleep 5
-done
+setsid "$LOCK_SCRIPT" &
+LOCK_PID=$!
+
+sleep 30
+kill -- -$LOCK_PID
